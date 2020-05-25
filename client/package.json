@@ -1,0 +1,23 @@
+{
+  "name": "@feqra/voucher-pool-client",
+  "version": "1.0.0",
+  "description": "Voucher Pool React web application",
+  "main": "index.js",
+  "scripts": {
+    "dev": "next"
+  },
+  "keywords": [
+    "Voucher",
+    "Voucher Pool"
+  ],
+  "author": "Taleb DAHAN",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.19.2",
+    "bootstrap": "^4.5.0",
+    "moment": "^2.26.0",
+    "next": "^9.4.2",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1"
+  }
+}

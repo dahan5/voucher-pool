@@ -1,0 +1,783 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "Voucher Pool Administration Application API",
+    "description": "Welcome to our voucher pool application API",
+    "license": {
+      "name": "MIT",
+      "url": "https://opensource.org/licenses/MIT"
+    }
+  },
+  "host": "vouchers.dev",
+  "basePath": "/api/vouchers",
+  "tags": [
+    {
+      "name": "Vouchers",
+      "description": "API for vouchers in the system"
+    }
+  ],
+  "schemes": [
+    "https"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/customers": {
+      "post": {
+        "tags": [
+          "Customers"
+        ],
+        "description": "Create new cusomter in system",
+        "parameters": [
+          {
+            "name": "customer",
+            "in": "body",
+            "description": "Customer that we want to create",
+            "schema": {
+              "$ref": "#/definitions/CustomerWithoutID"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "201": {
+            "description": "New customer is created",
+            "schema": {
+              "$ref": "#/definitions/Customer"
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Customers"
+        ],
+        "summary": "Get all customers in system",
+        "responses": {
+          "200": {
+            "description": "List of customers",
+            "schema": {
+              "$ref": "#/definitions/Customers"
+            }
+          }
+        }
+      }
+    },
+    "/customers/{email}": {
+      "parameters": [
+        {
+          "name": "email",
+          "in": "path",
+          "required": true,
+          "description": "Email of customer that we want to find",
+          "type": "string"
+        }
+      ],
+      "get": {
+        "tags": [
+          "Customers"
+        ],
+        "summary": "Get customer with given Email",
+        "responses": {
+          "200": {
+            "description": "Customer found",
+            "schema": {
+              "$ref": "#/definitions/Customer"
+            }
+          },
+          "404": {
+            "description": "Error:",
+            "schema": {
+              "properties": {
+                "errors": {
+                  "type": "array",
+                  "items": {
+                    "properties": {
+                      "message": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "summary": "Update customer with give Email",
+        "tags": [
+          "Customers"
+        ],
+        "parameters": [
+          {
+            "name": "customer",
+            "in": "body",
+            "description": "Customer with new values of properties",
+            "schema": {
+              "required": [
+                "name"
+              ],
+              "properties": {
+                "name": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Customer updated",
+            "schema": {
+              "$ref": "#/definitions/Customer"
+            }
+          },
+          "404": {
+            "description": "Error:",
+            "schema": {
+              "properties": {
+                "errors": {
+                  "type": "array",
+                  "items": {
+                    "properties": {
+                      "message": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+
+    "/offers": {
+      "post": {
+        "tags": [
+          "Special Offers"
+        ],
+        "description": "Create new offer in system",
+        "parameters": [
+          {
+            "name": "offer",
+            "in": "body",
+            "description": "Offer that we want to create",
+            "schema": {
+              "$ref": "#/definitions/SpecialOfferWithoutID"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "201": {
+            "description": "New offer is created",
+            "schema": {
+              "$ref": "#/definitions/SpecialOffer"
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Special Offers"
+        ],
+        "summary": "Get all offers in system",
+        "responses": {
+          "200": {
+            "description": "List of offers",
+            "schema": {
+              "$ref": "#/definitions/SpecialOffers"
+            }
+          }
+        }
+      }
+    },
+    "/offers/{id}": {
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "description": "ID of Offer that we want to find",
+          "type": "string"
+        }
+      ],
+      "get": {
+        "tags": [
+          "Special Offers"
+        ],
+        "summary": "Get offer with given ID",
+        "responses": {
+          "200": {
+            "description": "Offer found",
+            "schema": {
+              "$ref": "#/definitions/SpecialOffer"
+            }
+          },
+          "404": {
+            "description": "Error:",
+            "schema": {
+              "properties": {
+                "errors": {
+                  "type": "array",
+                  "items": {
+                    "properties": {
+                      "message": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "summary": "Update offer with give ID",
+        "tags": [
+          "Special Offers"
+        ],
+        "parameters": [
+          {
+            "name": "offer",
+            "in": "body",
+            "description": "Offer with new values of properties",
+            "schema": {
+              "required": [
+                "name",
+                "discount"
+              ],
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "discount": {
+                  "type": "number"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Offer updated",
+            "schema": {
+              "$ref": "#/definitions/Offer"
+            }
+          },
+          "404": {
+            "description": "Error:",
+            "schema": {
+              "properties": {
+                "errors": {
+                  "type": "array",
+                  "items": {
+                    "properties": {
+                      "message": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+
+    "/voucher_codes": {
+      "post": {
+        "tags": [
+          "Voucher Codes"
+        ],
+        "description": "Create new voucher code in system",
+        "parameters": [
+          {
+            "name": "voucher",
+            "in": "body",
+            "description": "Voucher Code that we want to create",
+            "schema": {
+              "$ref": "#/definitions/VoucherCodeWithoutID"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "201": {
+            "description": "New voucher code is created",
+            "schema": {
+              "properties": {
+                "code": {
+                  "type": "string"
+                },
+                "expiresAt": {
+                  "type": "string"
+                },
+                "usedAt": {
+                  "type": "string"
+                },
+                "customer": {
+                  "type": "string"
+                },
+                "specialOffer": {
+                  "type": "string"
+                },
+                "id": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Voucher Codes"
+        ],
+        "summary": "Get all voucher codes in system",
+        "responses": {
+          "200": {
+            "description": "List of voucher codes",
+            "schema": {
+              "properties": {
+                "code": {
+                  "type": "string"
+                },
+                "expiresAt": {
+                  "type": "string"
+                },
+                "usedAt": {
+                  "type": "string"
+                },
+                "customer": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "email": {
+                      "type": "string"
+                    },
+                    "id": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "specialOffer": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "discount": {
+                      "type": "number"
+                    },
+                    "id": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "id": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/voucher_codes/{email}/{status}": {
+      "parameters": [
+        {
+          "name": "email",
+          "in": "path",
+          "required": true,
+          "description": "Email of customer that we want to check his voucher codes",
+          "type": "string"
+        },
+        {
+          "name": "status",
+          "in": "path",
+          "required": true,
+          "description": "Status of the voucher. Possible values: a for all, u for used, n for new, e for expired",
+          "type": "string"
+        }
+      ],
+      "get": {
+        "tags": [
+          "Voucher Codes"
+        ],
+        "summary": "Get voucher codes by customer based on the status",
+        "responses": {
+          "200": {
+            "description": "List of voucher codes",
+            "schema": {
+              "properties": {
+                "code": {
+                  "type": "string"
+                },
+                "expiresAt": {
+                  "type": "string"
+                },
+                "usedAt": {
+                  "type": "string"
+                },
+                "customer": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "email": {
+                      "type": "string"
+                    },
+                    "id": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "specialOffer": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "discount": {
+                      "type": "number"
+                    },
+                    "id": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "id": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/voucher_codes/useit": {
+      "post": {
+        "tags": [
+          "Voucher Codes"
+        ],
+        "description": "Use an existing voucher code in system",
+        "parameters": [
+          {
+            "name": "voucher",
+            "in": "body",
+            "description": "Voucher Code that we want to create",
+            "schema": {
+              "properties": {
+                "code": {
+                  "type": "string"
+                },
+                "email": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Used voucher will be returned",
+            "schema": {
+              "properties": {
+                "code": {
+                  "type": "string"
+                },
+                "expiresAt": {
+                  "type": "string"
+                },
+                "usedAt": {
+                  "type": "string"
+                },
+                "customer": {
+                  "type": "string"
+                },
+                "specialOffer": {
+                  "type": "string"
+                },
+                "id": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Error:",
+            "schema": {
+              "properties": {
+                "errors": {
+                  "type": "array",
+                  "items": {
+                    "properties": {
+                      "message": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Error:",
+            "schema": {
+              "properties": {
+                "errors": {
+                  "type": "array",
+                  "items": {
+                    "properties": {
+                      "message": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/voucher_codes/validate": {
+      "post": {
+        "tags": [
+          "Voucher Codes"
+        ],
+        "description": "Use an existing voucher code in system",
+        "parameters": [
+          {
+            "name": "voucher",
+            "in": "body",
+            "description": "Voucher Code that we want to create",
+            "schema": {
+              "properties": {
+                "code": {
+                  "type": "string"
+                },
+                "email": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Used voucher will be returned",
+            "schema": {
+              "properties": {
+                "code": {
+                  "type": "string"
+                },
+                "expiresAt": {
+                  "type": "string"
+                },
+                "usedAt": {
+                  "type": "string"
+                },
+                "customer": {
+                  "type": "string"
+                },
+                "specialOffer": {
+                  "type": "string"
+                },
+                "id": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Error:",
+            "schema": {
+              "properties": {
+                "errors": {
+                  "type": "array",
+                  "items": {
+                    "properties": {
+                      "message": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Error:",
+            "schema": {
+              "properties": {
+                "errors": {
+                  "type": "array",
+                  "items": {
+                    "properties": {
+                      "message": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "CustomerWithoutID": {
+      "required": [
+        "name",
+        "email"
+      ],
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string",
+          "uniqueItems": true
+        }
+      }
+    },
+    "Customer": {
+      "required": [
+        "name",
+        "email"
+      ],
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string",
+          "uniqueItems": true
+        },
+        "id": {
+          "type": "string",
+          "uniqueItems": true
+        }
+      }
+    },
+    "Customers": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/Customer"
+      }
+    },
+    "SpecialOfferWithoutID": {
+      "required": [
+        "name",
+        "discount"
+      ],
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "discount": {
+          "type": "number"
+        }
+      }
+    },
+    "SpecialOffer": {
+      "required": [
+        "name",
+        "discount"
+      ],
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "discount": {
+          "type": "number"
+        },
+        "id": {
+          "type": "string",
+          "uniqueItems": true
+        }
+      }
+    },
+    "SpecialOffers": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/SpecialOffer"
+      }
+    },
+    "VoucherCodeWithoutID": {
+      "required": [
+        "expiresAt",
+        "offerId",
+        "customerId"
+      ],
+      "properties": {
+        "expiresAt": {
+          "type": "string"
+        },
+        "offerId": {
+          "type": "string"
+        },
+        "customerId": {
+          "type": "string"
+        }
+      }
+    },
+    "VoucherCode": {
+      "required": [
+        "expiresAt",
+        "offerId",
+        "customerId"
+      ],
+      "properties": {
+        "expiresAt": {
+          "type": "string"
+        },
+        "offerId": {
+          "type": "string"
+        },
+        "customerId": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string",
+          "uniqueItems": true
+        }
+      }
+    },
+    "VoucherCodes": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/VoucherCode"
+      }
+    }
+  }
+}

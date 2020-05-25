@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: vouchers-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: vouchers
+  template:
+    metadata:
+      labels:
+        app: vouchers
+    spec:
+      containers:
+        - name: vouchers
+          image: feqra/voucher-pool-vouchers
+          env:
+            - name: MONGO_URI
+              value: 'mongodb://vouchers-mongo-srv:27017/vouchers'
+            - name: JWT_KEY
+              value: 'tradeling'
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: vouchers-srv
+spec:
+  selector:
+    app: vouchers
+  ports:
+    - name: vouchers
+      protocol: TCP
+      port: 3000
+      targetPort: 3000
